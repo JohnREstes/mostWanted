@@ -1,0 +1,14 @@
+To-do list:
+
+Continue working together to solve problems as we come across them.
+
+
+
+
+
+Later:
+
+Dillon - make user input work when uppercase or lowercase
+Dillon - convert height to ft. and in.
+
+- Validation
