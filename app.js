@@ -33,19 +33,19 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = prompt("Found " + person[0].firstName + " " + person[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
       alert("Here is the information you requested: \nFull Name - " +
-      person[0].firstName + " " +
-      person[0].lastName + "\nSex - " +
-      person[0].gender + "\nDate of birth - " +
-      person[0].dob + "\nHeight - " + 
-      person[0].height + " in.\nWeight - " +
-      person[0].weight + " lbs.\nEyecolor - " +
-      person[0].eyeColor + "\nOccupation - " +
-      person[0].occupation);
+      person.firstName + " " +
+      person.lastName + "\nSex - " +
+      person.gender + "\nDate of birth - " +
+      person.dob + "\nHeight - " + 
+      person.height + " in.\nWeight - " +
+      person.weight + " lbs.\nEye color - " +
+      person.eyeColor + "\nOccupation - " +
+      person.occupation);
     break;
     case "family":
     // TODO: get person's family
@@ -76,6 +76,7 @@ function searchByName(people){
     }
   })
   // TODO: find the person using the name they entered
+  foundPerson = foundPerson[0];
   return foundPerson;
 }
 
