@@ -37,7 +37,15 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
-    // TODO: get person's info
+      alert("Here is the information you requested: \nFull Name - " +
+      person[0].firstName + " " +
+      person[0].lastName + "\nSex - " +
+      person[0].gender + "\nDate of birth - " +
+      person[0].dob + "\nHeight - " + 
+      person[0].height + " in.\nWeight - " +
+      person[0].weight + " lbs.\nEyecolor - " +
+      person[0].eyeColor + "\nOccupation - " +
+      person[0].occupation);
     break;
     case "family":
     // TODO: get person's family
