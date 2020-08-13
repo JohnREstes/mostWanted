@@ -51,7 +51,8 @@ function mainMenu(person, people){
     // TODO: get person's family
     break;
     case "descendants":
-    // TODO: get person's descendants
+      console.log(person[0].parents[0]);
+      decendantSearch(person, people);
     break;
     case "restart":
     app(people); // restart
@@ -112,3 +113,17 @@ function yesNo(input){
 function chars(input){
   return true; // default validation only
 }
+
+function decendantSearch(person, people){
+
+  let foundDecendant = people.filter(function(person, people){
+    let personsId = person[0].id;
+    if(person[0].id === people.parents[0]){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  return foundDecendant;
+}  
