@@ -2,8 +2,13 @@ To-do list:
 
 Continue working together to solve problems as we come across them.
 
+Dillon - 
+Make a way identify family members.
+Parents - field provided
+Spouse - field provided
+Sibling - go up to parents, search for parents number in other people
 
-
+John - Decedents
 
 
 Later:
