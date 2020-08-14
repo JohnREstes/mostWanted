@@ -125,18 +125,15 @@ function descendantsSearch(person, people){
 
   console.log(foundDescendants[0].firstName);
 
-  alert(descendantsMessage(person, foundDescendants));
+  let text = "\n";   
+  for (var i = 0; i < foundDescendants.length; i++) {
+   text += (`${foundDescendants[i].firstName} ${foundDescendants[i].lastName}\n`);
+  }
+  alert(`${person.firstName} ${person.lastName} has ${foundDescendants.length} descendants:\n${text}`);
 
-  return foundDescendants;
+  //return foundDescendants;
 }  
 
-function descendantMessage(person, foundDescendants){
-
-  var text = person.firstName + " " + person.lastName + " has " + foundDescendants1.length + " descendants.\n" + "They are: \n";    
-  for (var i = 0; i < foundDescendants.length; i++) {
-   text += foundDescendants[i].firstName + "\n";
-  }
-}
 function familySearch(person, people){
   let personsFamilyWithNames = {};
   personsFamilyWithNames.spouse = returnFunctionReturn(function(){
@@ -151,20 +148,6 @@ function familySearch(person, people){
   alert(`Here is ${person.firstName} ${person.lastName}'s family:
 Spouse - ${personsFamilyWithNames.spouse}`); //Other family members to come!
 }
-
-function descendantSearch(person, people){
-
-  let foundDescendant = people.filter(function(person, people){
-    let personsId = person[0].id;
-    if(person[0].id === people.parents[0]){
-      return true;
-    }
-    else{
-      return false;
-    }
-  })
-  return foundDescendant;
-}  
 
 function returnFunctionReturn(functionToReturnFrom){
   return functionToReturnFrom();
