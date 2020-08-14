@@ -51,8 +51,8 @@ function mainMenu(person, people){
     // TODO: get person's family
     break;
     case "descendants":
-      console.log(person[0].parents[0]);
-      decendantSearch(person, people);
+      let foundDescendants = descendantsSearch(person, people);
+      
     break;
     case "restart":
     app(people); // restart
@@ -76,7 +76,6 @@ function searchByName(people){
       return false;
     }
   })
-  // TODO: find the person using the name they entered
   foundPerson = foundPerson[0];
   return foundPerson;
 }
@@ -115,16 +114,24 @@ function chars(input){
   return true; // default validation only
 }
 
-function decendantSearch(person, people){
+function descendantsSearch(person, people){
 
-  let foundDecendant = people.filter(function(person, people){
-    let personsId = person[0].id;
-    if(person[0].id === people.parents[0]){
-      return true;
-    }
-    else{
-      return false;
-    }
-  })
-  return foundDecendant;
+  let parentId = person.id;
+
+  let foundDescendants = people.filter(el => el.parents[0] === parentId);
+  //let foundDescendants2 = people.filter(el => el.parents[1] === parentId);
+
+  console.log(foundDescendants[0].firstName);
+
+  alert(descendantsMessage(person, foundDescendants));
+
+  return foundDescendants;
 }  
+
+function descendantMessage(person, foundDescendants){
+
+  var text = person.firstName + " " + person.lastName + " has " + foundDescendants1.length + " descendants.\n" + "They are: \n";    
+  for (var i = 0; i < foundDescendants.length; i++) {
+   text += foundDescendants[i].firstName + "\n";
+  }
+}
