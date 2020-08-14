@@ -51,10 +51,7 @@ function mainMenu(person, people){
       familySearch(person, people)
     break;
     case "descendants":
-      let foundDescendants = descendantsSearch(person, people);
-      
-      console.log(person[0].parents[0]);
-      descendantSearch(person, people);
+      descendantsSearch(person, people);
     break;
     case "restart":
     app(people); // restart
@@ -119,20 +116,28 @@ function chars(input){
 function descendantsSearch(person, people){
 
   let parentId = person.id;
-
-  let foundDescendants = people.filter(el => el.parents[0] === parentId);
-  //let foundDescendants2 = people.filter(el => el.parents[1] === parentId);
-
-  console.log(foundDescendants[0].firstName);
-
+  let counter = 3;
+  let foundDescendants = descendantsSearchRecurscion(parentId, people, counter);
   let text = "\n";   
   for (var i = 0; i < foundDescendants.length; i++) {
    text += (`${foundDescendants[i].firstName} ${foundDescendants[i].lastName}\n`);
   }
   alert(`${person.firstName} ${person.lastName} has ${foundDescendants.length} descendants:\n${text}`);
-
-  //return foundDescendants;
 }  
+
+function descendantsSearchRecurscion(parentId, people, counter){
+
+  let foundDescendants = people.filter(el => el.parents[0] === parentId || el.parents[1] === parentId);
+  //if(foundDescendants.length > 1 && counter !== 0){
+    
+    //for(let i = 0; i < foundDescendants.length; i++){
+      
+      //let additionalFoundDescendants = descendantsSearchRecurscion(foundDescendants[i].id, people, (counter - 1))
+      //foundDescendants.push(additionalFoundDescendants);
+    //}
+  //}
+  return foundDescendants;
+}
 
 function familySearch(person, people){
   let personsFamilyWithNames = {};
