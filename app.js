@@ -146,10 +146,32 @@ function familySearch(person, people){
         spouse += `${people[i].firstName} ${people[i].lastName}`;
       }
     }
+    if (spouse == ""){
+      spouse = "none";
+    }
     return spouse;
-  })
+  });
+
+  personsFamilyWithNames.parents = returnFunctionReturn(function(){
+    let parents = [];
+    for (let i = 0; i < people.length; i++){
+      if (person.parents.includes(people[i].id)){
+        parents.push(`${people[i].firstName} ${people[i].lastName}`);
+      }
+    }
+    return parents;
+  });
+  if (personsFamilyWithNames.parents[0]){
+    personsFamilyWithNames.parent1 = personsFamilyWithNames.parents[0];
+    if(personsFamilyWithNames.parents[1]){
+      personsFamilyWithNames.parent2 = `, ${personsFamilyWithNames.parents[1]}`;
+    } else {personsFamilyWithNames.parent2 = "";}
+  } else {personsFamilyWithNames.parent1 = "no data"; personsFamilyWithNames.parent2 = "";}
+
   alert(`Here is ${person.firstName} ${person.lastName}'s family:
-Spouse - ${personsFamilyWithNames.spouse}`); //Other family members to come!
+Spouse   - ${personsFamilyWithNames.spouse}
+Parent(s) - ${personsFamilyWithNames.parent1}${personsFamilyWithNames.parent2}
+Sibling(s) - `);
 }
 
 function descendantSearch(person, people){
