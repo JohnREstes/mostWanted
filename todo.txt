@@ -37,7 +37,9 @@ You can search using the any combination of the following criteria:
 'occupation'
 
 Below, enter the criteria you would like to use to search, separated by commmas.
+example: eye color, dob, occupation
 
+NOTE: Entering more criteria will reduce your search results, possibly to none.
 
 
 You searched by these traits:
@@ -49,4 +51,4 @@ These people match your search:
 - firstName + lastName
 - etc.
 
-
+If you would like to know more about one of these people, enter the number from above (next to the person's name):
