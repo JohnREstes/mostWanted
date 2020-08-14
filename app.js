@@ -37,15 +37,7 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
-      alert("Here is the information you requested: \nFull Name - " +
-      person.firstName + " " +
-      person.lastName + "\nSex - " +
-      person.gender + "\nDate of birth - " +
-      person.dob + "\nHeight - " + 
-      person.height + " in.\nWeight - " +
-      person.weight + " lbs.\nEye color - " +
-      person.eyeColor + "\nOccupation - " +
-      person.occupation);
+      displayPerson(person);
     break;
     case "family":
       familySearch(person, people)
@@ -87,11 +79,15 @@ function displayPeople(people){
 }
 
 function displayPerson(person){
-  // print all of the information about a person:
-  // height, weight, age, name, occupation, eye color.
-  let personInfo = "First Name: " + person.firstName + "\n";
-  personInfo += "Last Name: " + person.lastName + "\n";
-  // TODO: finish getting the rest of the information to display
+  let personInfo ="Here is the information you requested: \nFull Name - " +
+  person.firstName + " " +
+  person.lastName + "\nSex - " +
+  person.gender + "\nDate of birth - " +
+  person.dob + "\nHeight - " + 
+  person.height + " in.\nWeight - " +
+  person.weight + " lbs.\nEye color - " +
+  person.eyeColor + "\nOccupation - " +
+  person.occupation;
   alert(personInfo);
 }
 
@@ -128,14 +124,14 @@ function descendantsSearch(person, people){
 function descendantsSearchRecurscion(parentId, people, counter){
 
   let foundDescendants = people.filter(el => el.parents[0] === parentId || el.parents[1] === parentId);
-  //if(foundDescendants.length > 1 && counter !== 0){
+  if(counter == 0){ 
     
-    //for(let i = 0; i < foundDescendants.length; i++){
+    for(let i = 0; i < foundDescendants.length; i++){
       
-      //let additionalFoundDescendants = descendantsSearchRecurscion(foundDescendants[i].id, people, (counter - 1))
-      //foundDescendants.push(additionalFoundDescendants);
-    //}
-  //}
+      let additionalFoundDescendants = descendantsSearchRecurscion(foundDescendants[i].id, people, (counter - 1))
+      foundDescendants.push(additionalFoundDescendants);
+    }
+  }
   return foundDescendants;
 }
 
