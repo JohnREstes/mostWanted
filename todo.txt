@@ -17,3 +17,36 @@ Dillon - make user input work when uppercase or lowercase
 Dillon - convert height to ft. and in.
 
 - Validation
+
+
+
+
+function searchByTraits(){
+
+}
+- Prompt user for criteria. Format:
+There are several criteria you can use to search.
+You can search using the any combination of the following criteria:
+'first name'
+'last name'
+'gender'
+'dob'
+'height'
+'weight'
+'eyeColor'
+'occupation'
+
+Below, enter the criteria you would like to use to search, separated by commmas.
+
+
+
+You searched by these traits:
+-
+-
+-
+
+These people match your search:
+- firstName + lastName
+- etc.
+
+
