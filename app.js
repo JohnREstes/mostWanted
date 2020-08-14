@@ -38,12 +38,15 @@ function mainMenu(person, people){
   switch(displayOption){
     case "info":
       displayPerson(person);
+      return mainMenu(person, people);
     break;
     case "family":
       familySearch(person, people)
+      return mainMenu(person, people);
     break;
     case "descendants":
       descendantsSearch(person, people);
+      return mainMenu(person, people);
     break;
     case "restart":
     app(people); // restart
@@ -112,7 +115,7 @@ function chars(input){
 function descendantsSearch(person, people){
 
   let parentId = person.id;
-  let counter = 3;
+  let counter = 5;
   let foundDescendants = descendantsSearchRecurscion(parentId, people, counter);
   let text = "\n";   
   for (var i = 0; i < foundDescendants.length; i++) {
@@ -122,17 +125,15 @@ function descendantsSearch(person, people){
 }  
 
 function descendantsSearchRecurscion(parentId, people, counter){
-
+  if(counter > 0){ 
   let foundDescendants = people.filter(el => el.parents[0] === parentId || el.parents[1] === parentId);
-  if(counter == 0){ 
-    
     for(let i = 0; i < foundDescendants.length; i++){
       
       let additionalFoundDescendants = descendantsSearchRecurscion(foundDescendants[i].id, people, (counter - 1))
       foundDescendants.push(additionalFoundDescendants);
+      return foundDescendants;
     }
   }
-  return foundDescendants;
 }
 
 function familySearch(person, people){
