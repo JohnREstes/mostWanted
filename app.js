@@ -48,11 +48,13 @@ function mainMenu(person, people){
       person.occupation);
     break;
     case "family":
-    // TODO: get person's family
+      familySearch(person, people)
     break;
     case "descendants":
       let foundDescendants = descendantsSearch(person, people);
       
+      console.log(person[0].parents[0]);
+      descendantSearch(person, people);
     break;
     case "restart":
     app(people); // restart
@@ -134,4 +136,36 @@ function descendantMessage(person, foundDescendants){
   for (var i = 0; i < foundDescendants.length; i++) {
    text += foundDescendants[i].firstName + "\n";
   }
+}
+function familySearch(person, people){
+  let personsFamilyWithNames = {};
+  personsFamilyWithNames.spouse = returnFunctionReturn(function(){
+    let spouse = "";
+    for (let i = 0; i < people.length; i++){
+      if (person.currentSpouse == people[i].id){
+        spouse += `${people[i].firstName} ${people[i].lastName}`;
+      }
+    }
+    return spouse;
+  })
+  alert(`Here is ${person.firstName} ${person.lastName}'s family:
+Spouse - ${personsFamilyWithNames.spouse}`); //Other family members to come!
+}
+
+function descendantSearch(person, people){
+
+  let foundDescendant = people.filter(function(person, people){
+    let personsId = person[0].id;
+    if(person[0].id === people.parents[0]){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  return foundDescendant;
+}  
+
+function returnFunctionReturn(functionToReturnFrom){
+  return functionToReturnFrom();
 }
