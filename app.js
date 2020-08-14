@@ -5,7 +5,7 @@ Build all of your functions for displaying and gathering information below (GUI)
 
 // app is the function called to start the entire application
 function app(people){
-  let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
+  let searchType = promptFor("Do you know the name of the person you are looking for?\nEnter 'yes' or 'no'", yesNo).toLowerCase();
   let searchResults;
   switch(searchType){
     case 'yes':
@@ -33,7 +33,7 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + ".\nDo you want to know their 'info', 'family', or 'descendants'?\nType the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
@@ -115,8 +115,10 @@ function chars(input){
 function descendantsSearch(person, people){
 
   let parentId = person.id;
+  let foundDescendants = [];
+  let abridgedDescendants = {};
   let counter = 5;
-  let foundDescendants = descendantsSearchRecurscion(parentId, people, counter);
+  foundDescendants = descendantsSearchRecurscion(parentId, people, foundDescendants, abridgedDescendants, counter);
   let text = "\n";   
   for (var i = 0; i < foundDescendants.length; i++) {
    text += (`${foundDescendants[i].firstName} ${foundDescendants[i].lastName}\n`);
@@ -124,16 +126,23 @@ function descendantsSearch(person, people){
   alert(`${person.firstName} ${person.lastName} has ${foundDescendants.length} descendants:\n${text}`);
 }  
 
-function descendantsSearchRecurscion(parentId, people, counter){
-  if(counter > 0){ 
-  let foundDescendants = people.filter(el => el.parents[0] === parentId || el.parents[1] === parentId);
-    for(let i = 0; i < foundDescendants.length; i++){
-      
-      let additionalFoundDescendants = descendantsSearchRecurscion(foundDescendants[i].id, people, (counter - 1))
-      foundDescendants.push(additionalFoundDescendants);
-      return foundDescendants;
-    }
-  }
+function descendantsSearchRecurscion(parentId, people, foundDescendants, abridgedDescendants, counter){
+  
+  foundDescendants = people.filter(el => el.parents[0] === parentId || el.parents[1] === parentId);
+  return foundDescendants;
+  // if(counter === 0) {
+  //   return foundDescendants;
+  // }
+  // else {
+  //   abridgedDescendants = people.filter(el => el.parents[0] === parentId || el.parents[1] === parentId);
+  //   foundDescendants = abridgedDescendants[0];
+  //   if(counter > 0 && abridgedDescendants !== undefined){
+  //     for(let i = 0; i < 4; i++){
+  //       abridgedDescendants = descendantsSearchRecurscion(abridgedDescendants[i].id, people, foundDescendants, counter - 1);
+  //     }
+  //     return abridgedDescendants
+  //   }
+  // }
 }
 
 function familySearch(person, people){
