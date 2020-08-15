@@ -123,12 +123,10 @@ function descendantsSearch(person, people){
   let additionalDescendants = [];
     for(let i = 0; i < numberOfDescendants; i++){
       parentId = foundDescendants[i].id;
-      additionalDescendants[i] = (descendantsSearchRecurscion(parentId, people));
+      additionalDescendants.push(descendantsSearchRecurscion(parentId, people));
     }
-    let revisedAdditionalDescendants = additionalDescendants.filter(el => el !== "null");
-    console.log(revisedAdditionalDescendants);
+      foundDescendants[4] = ({"firstName": (additionalDescendants[3][0].firstName), "lastName":(additionalDescendants[3][0].lastName)});
 
-    console.log(additionalDescendants)
   let text = "\n";   
   for (var i = 0; i < foundDescendants.length; i++) {
    text += (`${foundDescendants[i].firstName} ${foundDescendants[i].lastName}\n`);
@@ -199,4 +197,9 @@ function correctCase(input){
       }
     }
   return revisedString;
+}
+
+function traitSearch(person, people){
+
+
 }
