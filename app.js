@@ -5,7 +5,7 @@ Build all of your functions for displaying and gathering information below (GUI)
 
 // app is the function called to start the entire application
 function app(people){
-  let searchType = promptFor("Do you know the name of the person you are looking for?\nEnter 'yes' or 'no'", yesNo).toLowerCase();
+  let searchType = promptFor("Do you know the name of the person you are looking for?\n\nEnter 'yes' or 'no'", yesNo).toLowerCase();
   let searchResults;
   switch(searchType){
     case 'yes':
@@ -33,7 +33,7 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + ".\nDo you want to know their 'info', 'family', or 'descendants'?\nType the option you want or 'restart' or 'quit'");
+  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + ".\n\nDo you want to know their 'info', 'family', or 'descendants'?\n\nType the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
@@ -61,6 +61,9 @@ function mainMenu(person, people){
 function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars);
   let lastName = promptFor("What is the person's last name?", chars);
+
+  firstName = correctCase(firstName);
+  lastName = correctCase(lastName);
 
   let foundPerson = people.filter(function(person){
     if(person.firstName === firstName && person.lastName === lastName){
@@ -115,10 +118,17 @@ function chars(input){
 function descendantsSearch(person, people){
 
   let parentId = person.id;
-  let foundDescendants = [];
-  let abridgedDescendants = {};
-  let counter = 5;
-  foundDescendants = descendantsSearchRecurscion(parentId, people, foundDescendants, abridgedDescendants, counter);
+  let foundDescendants = descendantsSearchRecurscion(parentId, people);
+  let numberOfDescendants = foundDescendants.length;
+  let additionalDescendants = [];
+    for(let i = 0; i < numberOfDescendants; i++){
+      parentId = foundDescendants[i].id;
+      additionalDescendants[i] = (descendantsSearchRecurscion(parentId, people));
+    }
+    let revisedAdditionalDescendants = additionalDescendants.filter(el => el !== "null");
+    console.log(revisedAdditionalDescendants);
+
+    console.log(additionalDescendants)
   let text = "\n";   
   for (var i = 0; i < foundDescendants.length; i++) {
    text += (`${foundDescendants[i].firstName} ${foundDescendants[i].lastName}\n`);
@@ -126,23 +136,9 @@ function descendantsSearch(person, people){
   alert(`${person.firstName} ${person.lastName} has ${foundDescendants.length} descendants:\n${text}`);
 }  
 
-function descendantsSearchRecurscion(parentId, people, foundDescendants, abridgedDescendants, counter){
+function descendantsSearchRecurscion(parentId, people){
   
-  foundDescendants = people.filter(el => el.parents[0] === parentId || el.parents[1] === parentId);
-  return foundDescendants;
-  // if(counter === 0) {
-  //   return foundDescendants;
-  // }
-  // else {
-  //   abridgedDescendants = people.filter(el => el.parents[0] === parentId || el.parents[1] === parentId);
-  //   foundDescendants = abridgedDescendants[0];
-  //   if(counter > 0 && abridgedDescendants !== undefined){
-  //     for(let i = 0; i < 4; i++){
-  //       abridgedDescendants = descendantsSearchRecurscion(abridgedDescendants[i].id, people, foundDescendants, counter - 1);
-  //     }
-  //     return abridgedDescendants
-  //   }
-  // }
+  return people.filter(el => el.parents[0] === parentId || el.parents[1] === parentId);
 }
 
 function familySearch(person, people){
@@ -184,4 +180,23 @@ Sibling(s) - `);
 
 function returnFunctionReturn(functionToReturnFrom){
   return functionToReturnFrom();
+}
+
+function correctCase(input){
+  let revisedString = "";
+  let firstLetter = true;
+    for(let i = 0; i < input.length; i++){
+      if (firstLetter == true){
+        revisedString += input[i].toUpperCase();
+        firstLetter = false;           
+      }
+      else if(input[i] === " "){
+        revisedString += input[i];
+        firstLetter = true;
+      }
+      else{
+        revisedString += input[i].toLowerCase();
+      }
+    }
+  return revisedString;
 }
