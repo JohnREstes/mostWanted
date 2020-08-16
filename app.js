@@ -33,24 +33,29 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + ".\n\nDo you want to know their 'info', 'family', or 'descendants'?\n\nType the option you want or 'restart' or 'quit'");
+  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + ".\n\nDo you want to know their 'info', 'family', or 'descendants'?\n\nType the option you want or 'restart' or 'quit'").toLowerCase();
 
   switch(displayOption){
+    case "i":
     case "info":
       displayPerson(person);
       return mainMenu(person, people);
     break;
+    case "f":
     case "family":
       familySearch(person, people)
       return mainMenu(person, people);
     break;
+    case "d":
     case "descendants":
       descendantsSearch(person, people);
       return mainMenu(person, people);
     break;
+    case "r":
     case "restart":
     app(people); // restart
     break;
+    case "q":
     case "quit":
     return; // stop execution
     default:
