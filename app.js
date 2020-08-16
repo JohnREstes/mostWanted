@@ -12,6 +12,7 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
+      traitSearch(person, people);
       // TODO: search by traits
       break;
       default:
@@ -126,11 +127,14 @@ function descendantsSearch(person, people){
   let foundDescendants = descendantsSearchRecurscion(parentId, people);
   let numberOfDescendants = foundDescendants.length;
   let additionalDescendants = [];
-    for(let i = 0; i < numberOfDescendants; i++){
-      parentId = foundDescendants[i].id;
-      additionalDescendants.push(descendantsSearchRecurscion(parentId, people));
-    }
-      foundDescendants[4] = ({"firstName": (additionalDescendants[3][0].firstName), "lastName":(additionalDescendants[3][0].lastName)});
+      for(let i = 0; i < numberOfDescendants; i++){
+        parentId = foundDescendants[i].id;
+        additionalDescendants.push(descendantsSearchRecurscion(parentId, people));
+      }
+      let numberOfAdditionalDescendants = additionalDescendants.filter(el => el.length !== 0);
+      if(numberOfAdditionalDescendants.length > 0){
+        foundDescendants[numberOfDescendants] = ({"firstName": (numberOfAdditionalDescendants[0][0].firstName), "lastName":(numberOfAdditionalDescendants[0][0].lastName)});
+      }
 
   let text = "\n";   
   for (var i = 0; i < foundDescendants.length; i++) {
@@ -206,5 +210,36 @@ function correctCase(input){
 
 function traitSearch(person, people){
 
+  let traitOption = prompt("Please type the individual traits you would like to search by, seperated by a comma.\nfirst name, last name, date of birth, gender, height, weight, eye color, and/or occupation.").toLowerCase();
 
+  switch(traitOption){
+    case "first name":
+
+    break;
+    case "last name":
+
+    break;
+    case "dob":
+    case "date of birth":
+
+    break;
+    case "gender":
+
+    break;
+    case "height":
+    
+    break;
+    case "weight":
+
+    break;
+    case "eye color":
+
+    break;
+    case "occupation":
+    
+    break;
+
+    default:
+    return traitSearch(person, people); // ask again
+  }
 }
