@@ -179,10 +179,29 @@ function familySearch(person, people){
     } else {personsFamilyWithNames.parent2 = "";}
   } else {personsFamilyWithNames.parent1 = "no data"; personsFamilyWithNames.parent2 = "";}
 
+  personsFamilyWithNames.siblings = returnFunctionReturn(function(){
+    let siblings = [];
+    if (person.parents !== []){
+      for (let i = 0; i < people.length; i++){
+        if (people[i].parents !== [] && person.id !== people[i].id){
+          for(let j = 0; j < people[i].parents.length; j++){
+            if(!(siblings.includes(` ${people[i].firstName} ${people[i].lastName}`)) && person.parents.includes(people[i].parents[j])){
+              siblings.push(` ${people[i].firstName} ${people[i].lastName}`);
+            }
+          }
+        }
+      }
+      if (siblings.length == 0){
+        siblings.push(' no data');
+      }
+      return siblings;
+    }
+  })
+
   alert(`Here is ${person.firstName} ${person.lastName}'s family:
-Spouse   - ${personsFamilyWithNames.spouse}
+Spouse  -  ${personsFamilyWithNames.spouse}
 Parent(s) - ${personsFamilyWithNames.parent1}${personsFamilyWithNames.parent2}
-Sibling(s) - `);
+Sibling(s) -${personsFamilyWithNames.siblings}`);
 }
 
 function returnFunctionReturn(functionToReturnFrom){
