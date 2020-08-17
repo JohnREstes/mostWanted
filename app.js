@@ -262,3 +262,45 @@ function traitSearch(person, people){
     return traitSearch(person, people); // ask again
   }
 }
+
+// function descendantsSearch(person, people){
+
+//   let numberOfDescendants = 0;
+//   let foundDescendants = {};
+//   let additionalDescendants = {};
+//   foundDescendants = descendantsSearchRecurscion(person, people, foundDescendants, numberOfDescendants);
+//   numberOfDescendants = foundDescendants.length;
+//   additionalDescendants = descendantsSearchRecurscion(foundDescendants, people, foundDescendants, numberOfDescendants-1);  
+
+//       // for(let i = 0; i < numberOfDescendants; i++){
+//       //   parentId = foundDescendants[i].id;
+//       //   additionalDescendants.push(descendantsSearchRecurscion(parentId, people));
+//       // }
+//       // let numberOfAdditionalDescendants = additionalDescendants.filter(el => el.length !== 0);
+//       // if(numberOfAdditionalDescendants.length > 0){
+//       //   foundDescendants[numberOfDescendants] = ({"firstName": (numberOfAdditionalDescendants[0][0].firstName), "lastName":(numberOfAdditionalDescendants[0][0].lastName)});
+//       // }
+
+//   let text = "\n";   
+//   for (var i = 0; i < foundDescendants.length; i++) {
+//    text += (`${foundDescendants[i].firstName} ${foundDescendants[i].lastName}\n`);
+//   }
+//   alert(`${person.firstName} ${person.lastName} has ${foundDescendants.length} descendants:\n${text}`);
+// }  
+
+// function descendantsSearchRecurscion(person, people, foundDescendants, numberOfDescendants){
+//   let id = 0;
+//   if(numberOfDescendants == 0){
+//     id = person.id;
+//   }
+//   else {
+//     id = person[numberOfDescendants].id;
+//   }
+//   foundDescendants = (people.filter(el => el.parents[0] === id || el.parents[1] === id));
+//   if (numberOfDescendants > 0){
+//     return descendantsSearchRecurscion(id, people, foundDescendants, numberOfDescendants-1); // return here!
+//   }
+//   else {
+//     return foundDescendants;
+//   }
+// }
