@@ -203,17 +203,22 @@ function traitSearch(people){
   
   if(traitsToSearchBy.includes('first')){
     let firstName = prompt('Enter the first name of the person you are searching for.');
+    firstName = correctCase(firstName);
       traitSearchArray = traitSearchArray.filter(el => el.firstName.toLowerCase() == firstName.toLowerCase());
   }
   if(traitsToSearchBy.includes('last')){
     let lastName = prompt('Enter the last name of the person you are searching for.');
+    lastName = correctCase(lastName);
       traitSearchArray = traitSearchArray.filter(el => el.lastName.toLowerCase() == lastName.toLowerCase());
   }
-  /*
   if(traitsToSearchBy.includes('age')){
     let age = prompt('Enter the age, in years, of the person you are searching for.');
-      traitSearchArray = traitSearchArray.filter(el => el.age === age);
-  } */
+      for(let i = 0; i < traitSearchArray.length; i++){
+        let currentPersonAge = DOBToAge(traitSearchArray[i]);
+        traitSearchArray[i]['age'] = currentPersonAge;
+    }
+    traitSearchArray = traitSearchArray.filter(el => el.age == age);
+  } 
   if(traitsToSearchBy.includes('gender') || traitsToSearchBy.includes('sex')){
     let gender = prompt('Enter the gender of the person you are searching for.');
       traitSearchArray = traitSearchArray.filter(el => el.gender.toLowerCase() == gender.toLowerCase());
