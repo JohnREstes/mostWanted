@@ -1,5 +1,10 @@
 To-do list:
 
+Dillon:
+- Account for the case of no one matching the search criteria given.
+- Make the trait search ask to quit or restart.
+
+
 - Validation
 
 
