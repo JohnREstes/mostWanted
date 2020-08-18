@@ -12,9 +12,10 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
-      traitSearch(people);
-      return;
-    default:
+      let person = traitSearch(people);
+      // TODO: search by traits
+      break;
+      default:
     app(people); // restart app
       break;
   }
@@ -40,23 +41,26 @@ function mainMenu(person, people){
     case "info":
       displayPerson(person);
       return mainMenu(person, people);
+    break;
     case "f":
     case "family":
       familySearch(person, people)
       return mainMenu(person, people);
+    break;
     case "d":
     case "descendants":
       descendantsSearch(person, people);
       return mainMenu(person, people);
+    break;
     case "r":
     case "restart":
-      app(people); // restart
-      break;
+    app(people); // restart
+    break;
     case "q":
     case "quit":
-      return; // stop execution
+    return; // stop execution
     default:
-      return mainMenu(person, people); // ask again
+    return mainMenu(person, people); // ask again
   }
 }
 
@@ -210,11 +214,7 @@ function correctCase(input){
 }
 
 function traitSearch(people){
-  let traitsToSearchBy = prompt(`Please type the individual traits you would like to search by, seperated by commas.
-
-first name, last name, gender, height, weight, eye color, and/or occupation.
-  
-example: eye color, occupation, last name`).toLowerCase();
+  let traitsToSearchBy = prompt(`Please type the individual traits you would like to search by, seperated by a comma.\n\nfirst name, last name, date of birth, gender, height, weight, eye color, and/or occupation.`).toLowerCase();
   let traitSearchArray = [...people];
   
   if(traitsToSearchBy.includes('first')){
@@ -290,4 +290,18 @@ function inchesToFeet(person){
   let feet = Math.floor(height / 12);
   let inches = height % 12;
   return `${feet}' ${inches}\"`;
+}
+
+function DOBToAge(person){
+  var today = new Date();
+  let fullBirthday = person.dob;
+  let birthdayArray = fullBirthday.split('/');
+  fullBirthday = birthdayArray[2] + "," + birthdayArray[0] + "," + birthdayArray[1];
+  var birthDate = new Date(fullBirthday);
+  var age = today.getFullYear() - birthDate.getFullYear();
+  var m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age = age - 1;
+  }
+  return age;
 }
