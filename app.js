@@ -87,12 +87,13 @@ function displayPeople(people){
 }
 
 function displayPerson(person){
+  let height = inchesToFeet(person);
   let personInfo ="Here is the information you requested: \nFull Name - " +
   person.firstName + " " +
   person.lastName + "\nSex - " +
   person.gender + "\nDate of birth - " +
   person.dob + "\nHeight - " + 
-  person.height + " in.\nWeight - " +
+  height + "\nWeight - " +
   person.weight + " lbs.\nEye color - " +
   person.eyeColor + "\nOccupation - " +
   person.occupation;
@@ -120,29 +121,14 @@ function chars(input){
 function descendantsSearch(person, people){
 
   let parentId = person.id;
-  let foundDescendants = descendantsSearchRecurscion(parentId, people);
-  let numberOfDescendants = foundDescendants.length;
-  let additionalDescendants = [];
-      for(let i = 0; i < numberOfDescendants; i++){
-        parentId = foundDescendants[i].id;
-        additionalDescendants.push(descendantsSearchRecurscion(parentId, people));
-      }
-      let numberOfAdditionalDescendants = additionalDescendants.filter(el => el.length !== 0);
-      if(numberOfAdditionalDescendants.length > 0){
-        foundDescendants[numberOfDescendants] = ({"firstName": (numberOfAdditionalDescendants[0][0].firstName), "lastName":(numberOfAdditionalDescendants[0][0].lastName)});
-      }
-
+  let foundDescendants = [];
+  foundDescendants =  descendantsSearchRecurscion(parentId, people, foundDescendants);
   let text = "\n";   
   for (var i = 0; i < foundDescendants.length; i++) {
    text += (`${foundDescendants[i].firstName} ${foundDescendants[i].lastName}\n`);
   }
   alert(`${person.firstName} ${person.lastName} has ${foundDescendants.length} descendants:\n${text}`);
 }  
-
-function descendantsSearchRecurscion(parentId, people){
-  
-  return people.filter(el => el.parents[0] === parentId || el.parents[1] === parentId);
-}
 
 function familySearch(person, people){
   let personsFamilyWithNames = {};
@@ -275,44 +261,31 @@ ${traitSearchArray[i].firstName} ${traitSearchArray[i].lastName}`;
   alert(traitSearchText+"\n\nIf you would like to search again, proceed, then click/tap the 'Start Searching' button.");
 }
 
-// function descendantsSearch(person, people){
+function descendantsSearchRecurscion(parentId, people, foundDescendants){
+  foundDescendants = people.filter(el => el.parents[0] === parentId || el.parents[1] === parentId);
+  let numberOfAdditionalDescendants = foundDescendants.length;
+  let additionalDescendants = [];
+  let allDescendants = [];
+  
+  for(let i = 0; i < foundDescendants.length; i++){
+    parentId = foundDescendants[i].id;
+    additionalDescendants = descendantsSearchRecurscion(parentId, people, foundDescendants);
+    
+    if(additionalDescendants === undefined){
+      return additionalDescendants;
+    }
+  }
+  if(numberOfAdditionalDescendants === 0){
+    return foundDescendants;
+  }
+  else{
+    return allDescendants = foundDescendants.concat(additionalDescendants);
+  }
+}
 
-//   let numberOfDescendants = 0;
-//   let foundDescendants = {};
-//   let additionalDescendants = {};
-//   foundDescendants = descendantsSearchRecurscion(person, people, foundDescendants, numberOfDescendants);
-//   numberOfDescendants = foundDescendants.length;
-//   additionalDescendants = descendantsSearchRecurscion(foundDescendants, people, foundDescendants, numberOfDescendants-1);  
-
-//       // for(let i = 0; i < numberOfDescendants; i++){
-//       //   parentId = foundDescendants[i].id;
-//       //   additionalDescendants.push(descendantsSearchRecurscion(parentId, people));
-//       // }
-//       // let numberOfAdditionalDescendants = additionalDescendants.filter(el => el.length !== 0);
-//       // if(numberOfAdditionalDescendants.length > 0){
-//       //   foundDescendants[numberOfDescendants] = ({"firstName": (numberOfAdditionalDescendants[0][0].firstName), "lastName":(numberOfAdditionalDescendants[0][0].lastName)});
-//       // }
-
-//   let text = "\n";   
-//   for (var i = 0; i < foundDescendants.length; i++) {
-//    text += (`${foundDescendants[i].firstName} ${foundDescendants[i].lastName}\n`);
-//   }
-//   alert(`${person.firstName} ${person.lastName} has ${foundDescendants.length} descendants:\n${text}`);
-// }  
-
-// function descendantsSearchRecurscion(person, people, foundDescendants, numberOfDescendants){
-//   let id = 0;
-//   if(numberOfDescendants == 0){
-//     id = person.id;
-//   }
-//   else {
-//     id = person[numberOfDescendants].id;
-//   }
-//   foundDescendants = (people.filter(el => el.parents[0] === id || el.parents[1] === id));
-//   if (numberOfDescendants > 0){
-//     return descendantsSearchRecurscion(id, people, foundDescendants, numberOfDescendants-1); // return here!
-//   }
-//   else {
-//     return foundDescendants;
-//   }
-// }
+function inchesToFeet(person){
+  let height = person.height
+  let feet = Math.floor(height / 12);
+  let inches = height % 12;
+  return `${feet}' ${inches}\"`;
+}
