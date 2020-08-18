@@ -221,11 +221,18 @@ function traitSearch(people){
     let lastName = prompt('Enter the last name of the person you are searching for.');
       traitSearchArray = traitSearchArray.filter(el => el.lastName.toLowerCase() == lastName.toLowerCase());
   }
-  /* Maybe add an age search later instead of dob search. 
   if(traitsToSearchBy.includes('date') || traitsToSearchBy.includes('birth') || traitsToSearchBy.includes('dob')){
     let dob = prompt('Enter the date of birth of the person you are searching for in the following format:\nmm/dd/yyyy');
       traitSearchArray = traitSearchArray.filter(el => el.dob === dob);
-  } */
+  } 
+if(traitsToSearchBy.includes('age')){
+  let age = prompt('Enter the age, in years, of the person you are searching for.');
+    for(let i = 0; i < traitSearchArray.length; i++){
+      let currentPersonAge = DOBToAge(traitSearchArray[i]);
+      traitSearchArray[i]['age'] = currentPersonAge;
+    }
+    traitSearchArray = traitSearchArray.filter(el => el.age == age);
+} 
   if(traitsToSearchBy.includes('gender') || traitsToSearchBy.includes('sex')){
     let gender = prompt('Enter the gender of the person you are searching for.');
       traitSearchArray = traitSearchArray.filter(el => el.gender.toLowerCase() == gender.toLowerCase());
