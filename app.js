@@ -12,11 +12,10 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
-      let person = traitSearch(people);
-      // TODO: search by traits
-      break;
-      default:
-    app(people); // restart app
+      traitSearch(people);
+      return;
+    default:
+      app(people); // restart app
       break;
   }
   
@@ -41,24 +40,21 @@ function mainMenu(person, people){
     case "info":
       displayPerson(person);
       return mainMenu(person, people);
-    break;
     case "f":
     case "family":
       familySearch(person, people)
       return mainMenu(person, people);
-    break;
     case "d":
     case "descendants":
       descendantsSearch(person, people);
       return mainMenu(person, people);
-    break;
     case "r":
     case "restart":
-    app(people); // restart
-    break;
+      app(people); // restart
+      break;
     case "q":
     case "quit":
-    return; // stop execution
+      return; // stop execution
     default:
     return mainMenu(person, people); // ask again
   }
@@ -243,11 +239,11 @@ function traitSearch(people){
       traitSearchArray = traitSearchArray.filter(el => el.weight == weight);
   }
   if(traitsToSearchBy.includes('eye') || traitsToSearchBy.includes('color')){
-    let eyeColor = prompt('Enter the last name of the person you are searching for.');
+    let eyeColor = prompt('Enter the eye color of the person you are searching for.');
       traitSearchArray = traitSearchArray.filter(el => el.eyeColor.toLowerCase() == eyeColor.toLowerCase());
   }
   if(traitsToSearchBy.includes('occupation') || traitsToSearchBy.includes('job')){
-    let occupation = prompt('Enter the last name of the person you are searching for.');
+    let occupation = prompt('Enter the occupation of the person you are searching for.');
       traitSearchArray = traitSearchArray.filter(el => el.occupation.toLowerCase() == occupation.toLowerCase());
   }
   if(traitSearchArray.length == people.length){
