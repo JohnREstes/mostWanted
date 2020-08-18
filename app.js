@@ -91,12 +91,13 @@ function displayPeople(people){
 }
 
 function displayPerson(person){
+  let height = inchesToFeet(person);
   let personInfo ="Here is the information you requested: \nFull Name - " +
   person.firstName + " " +
   person.lastName + "\nSex - " +
   person.gender + "\nDate of birth - " +
   person.dob + "\nHeight - " + 
-  person.height + " in.\nWeight - " +
+  height + "\nWeight - " +
   person.weight + " lbs.\nEye color - " +
   person.eyeColor + "\nOccupation - " +
   person.occupation;
@@ -251,17 +252,16 @@ Ask again if necessary
 function descendantsSearchRecurscion(parentId, people, foundDescendants){
   foundDescendants = people.filter(el => el.parents[0] === parentId || el.parents[1] === parentId);
   let numberOfAdditionalDescendants = foundDescendants.length;
-  var additionalDescendants = [];
+  let additionalDescendants = [];
   let allDescendants = [];
   
-  for(let i = 0; i < numberOfAdditionalDescendants; i++){
+  for(let i = 0; i < foundDescendants.length; i++){
     parentId = foundDescendants[i].id;
     additionalDescendants = descendantsSearchRecurscion(parentId, people, foundDescendants);
     
     if(additionalDescendants === undefined){
       return additionalDescendants;
     }
-  
   }
   if(numberOfAdditionalDescendants === 0){
     return foundDescendants;
@@ -269,5 +269,11 @@ function descendantsSearchRecurscion(parentId, people, foundDescendants){
   else{
     return allDescendants = foundDescendants.concat(additionalDescendants);
   }
+}
 
+function inchesToFeet(person){
+  let height = person.height
+  let feet = Math.floor(height / 12);
+  let inches = height % 12;
+  return `${feet}' ${inches}\"`;
 }
