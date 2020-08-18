@@ -229,56 +229,42 @@ function correctCase(input){
 
 function traitSearch(people){
 
-  let traitOption = prompt(`Please type the individual traits you would like to search by, seperated by a comma.\n\nfirst name, last name, date of birth, gender, height, weight, eye color, and/or occupation.`).toLowerCase();
-  let traitArray = traitOption.split(',');
-    let traitText = `\n`;   
-    for (let i = 0; i < traitArray.length; i++) {
-      traitText += (`${traitArray}, `);
+  let traitsToSearchBy = prompt(`Please type the individual traits you would like to search by, seperated by a comma.\n\nfirst name, last name, date of birth, gender, height, weight, eye color, and/or occupation.`).toLowerCase();
+  let traitSearchArray = [...people];
+
+    if(traitsToSearchBy.includes('first')){
+      let firstName = prompt('Enter the first name of the person you are searching for.');
+        traitSearchArray = traitSearchArray.filter(el => el.firstName === firstName);
     }
-  let traitCharacteristic = prompt(`Please enter: ${traitText}`)
-  let traitCharacteristicArray = traitCharacteristic.split(",");
-  let persons = {};
-
-  for(let i = 0; i < traitArray.length; i++){
-
-    switch(traitArray[i]){
-      case "first name":
-        persons = (people.filter(el => el.firstName === traitCharacteristicArray[i]));
-      break;
-      case "last name":
-        persons = people.filter(el => el.lastName === traitCharacteristicArray[i]);
-      break;
-      case "dob":
-      case "date of birth":
-        persons = people.filter(el => el.dob === traitCharacteristicArray[i]);
-      break;
-      case "gender":
-        persons = people.filter(el => el.gender === traitCharacteristicArray[i]);
-      break;
-      case "height":
-        persons = people.filter(el => el.height === traitCharacteristicArray[i]);      
-      break;
-      case "weight":
-        persons = people.filter(el => el.weight === traitCharacteristicArray[i]);
-      break;
-      case "eye color":
-        persons = people.filter(el => el.eyeColor === traitCharacteristicArray[i]);
-      break;
-      case "occupation":
-        persons = people.filter(el => el.occupation === traitCharacteristicArray[i]);    
-      break;
-
-      default:
-      traitSearch(person, people); // ask again
+    if(traitsToSearchBy.includes('last')){
+      let lastName = prompt('Enter the last name of the person you are searching for.');
+        traitSearchArray = traitSearchArray.filter(el => el.lastName === lastName);
     }
-  }
-  let matchedPersons = ``;   
-  for (let i = 0; i < persons.length; i++) {
-    matchedPersons += (`${person[i].firstName} ${person[i].lastName}, `);
-  }
-  alert(`Here is the list that matches your criteria: ${matchedPersons}`);
-return persons;
+
+    let traitSearchText = 'The following people match your search:';
+    for (let i = 0; i < traitSearchArray.length; i++){
+      traitSearchText += `
+${traitSearchArray[i].firstName} ${traitSearchArray[i].lastName}`;
+    }
+
+    alert(traitSearchText);
 }
+
+/*
+dob
+date
+gender
+height
+weight
+eye color
+occupation
+
+Ask again if necessary
+
+*/
+
+
+
 
 // function descendantsSearch(person, people){
 
