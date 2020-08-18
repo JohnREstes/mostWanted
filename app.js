@@ -12,10 +12,9 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
-      let person = traitSearch(people);
-      // TODO: search by traits
-      break;
-      default:
+      traitSearch(people);
+      return;
+    default:
     app(people); // restart app
       break;
   }
@@ -41,26 +40,23 @@ function mainMenu(person, people){
     case "info":
       displayPerson(person);
       return mainMenu(person, people);
-    break;
     case "f":
     case "family":
       familySearch(person, people)
       return mainMenu(person, people);
-    break;
     case "d":
     case "descendants":
       descendantsSearch(person, people);
       return mainMenu(person, people);
-    break;
     case "r":
     case "restart":
-    app(people); // restart
-    break;
+      app(people); // restart
+      break;
     case "q":
     case "quit":
-    return; // stop execution
+      return; // stop execution
     default:
-    return mainMenu(person, people); // ask again
+      return mainMenu(person, people); // ask again
   }
 }
 
@@ -228,43 +224,56 @@ function correctCase(input){
 }
 
 function traitSearch(people){
+  let traitsToSearchBy = prompt(`Please type the individual traits you would like to search by, seperated by commas.
 
-  let traitsToSearchBy = prompt(`Please type the individual traits you would like to search by, seperated by a comma.\n\nfirst name, last name, date of birth, gender, height, weight, eye color, and/or occupation.`).toLowerCase();
+first name, last name, gender, height, weight, eye color, and/or occupation.
+  
+example: eye color, occupation, last name`).toLowerCase();
   let traitSearchArray = [...people];
+  
+  if(traitsToSearchBy.includes('first')){
+    let firstName = prompt('Enter the first name of the person you are searching for.');
+      traitSearchArray = traitSearchArray.filter(el => el.firstName.toLowerCase() == firstName.toLowerCase());
+  }
+  if(traitsToSearchBy.includes('last')){
+    let lastName = prompt('Enter the last name of the person you are searching for.');
+      traitSearchArray = traitSearchArray.filter(el => el.lastName.toLowerCase() == lastName.toLowerCase());
+  }
+  /* Maybe add an age search later instead of dob search. 
+  if(traitsToSearchBy.includes('date') || traitsToSearchBy.includes('birth') || traitsToSearchBy.includes('dob')){
+    let dob = prompt('Enter the date of birth of the person you are searching for in the following format:\nmm/dd/yyyy');
+      traitSearchArray = traitSearchArray.filter(el => el.dob === dob);
+  } */
+  if(traitsToSearchBy.includes('gender') || traitsToSearchBy.includes('sex')){
+    let gender = prompt('Enter the gender of the person you are searching for.');
+      traitSearchArray = traitSearchArray.filter(el => el.gender.toLowerCase() == gender.toLowerCase());
+  }
+  if(traitsToSearchBy.includes('height')){
+    let height = prompt("Enter the height, in inches (e.g. '72' for 6'0\"), of the person you are searching for.");
+      traitSearchArray = traitSearchArray.filter(el => el.height == height);
+  }
+  if(traitsToSearchBy.includes('weight')){
+    let weight = prompt('Enter the weight, in pounds, of the person you are searching for.');
+      traitSearchArray = traitSearchArray.filter(el => el.weight == weight);
+  }
+  if(traitsToSearchBy.includes('eye') || traitsToSearchBy.includes('color')){
+    let eyeColor = prompt('Enter the last name of the person you are searching for.');
+      traitSearchArray = traitSearchArray.filter(el => el.eyeColor.toLowerCase() == eyeColor.toLowerCase());
+  }
+  if(traitsToSearchBy.includes('occupation') || traitsToSearchBy.includes('job')){
+    let occupation = prompt('Enter the last name of the person you are searching for.');
+      traitSearchArray = traitSearchArray.filter(el => el.occupation.toLowerCase() == occupation.toLowerCase());
+  }
+  if(traitSearchArray.length == people.length)
 
-    if(traitsToSearchBy.includes('first')){
-      let firstName = prompt('Enter the first name of the person you are searching for.');
-        traitSearchArray = traitSearchArray.filter(el => el.firstName === firstName);
-    }
-    if(traitsToSearchBy.includes('last')){
-      let lastName = prompt('Enter the last name of the person you are searching for.');
-        traitSearchArray = traitSearchArray.filter(el => el.lastName === lastName);
-    }
 
-    let traitSearchText = 'The following people match your search:';
-    for (let i = 0; i < traitSearchArray.length; i++){
-      traitSearchText += `
+  let traitSearchText = 'The following people match your search:';
+  for (let i = 0; i < traitSearchArray.length; i++){
+    traitSearchText += `
 ${traitSearchArray[i].firstName} ${traitSearchArray[i].lastName}`;
-    }
-
-    alert(traitSearchText);
+  }
+  alert(traitSearchText+"\n\nIf you would like to search again, proceed, then click/tap the 'Start Searching' button.");
 }
-
-/*
-dob
-date
-gender
-height
-weight
-eye color
-occupation
-
-Ask again if necessary
-
-*/
-
-
-
 
 // function descendantsSearch(person, people){
 

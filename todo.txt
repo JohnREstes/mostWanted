@@ -1,54 +1,8 @@
 To-do list:
 
-Continue working together to solve problems as we come across them.
-
-Dillon - 
-Make a way identify family members.
-Parents - field provided
-Spouse - field provided
-Sibling - go up to parents, search for parents number in other people
-
-John - Decedents
-
-
-Later:
-
-Dillon - make user input work when uppercase or lowercase
-Dillon - convert height to ft. and in.
-
 - Validation
 
 
-
-
-function searchByTraits(){
-
-}
-- Prompt user for criteria. Format:
-There are several criteria you can use to search.
-You can search using the any combination of the following criteria:
-'first name'
-'last name'
-'gender'
-'dob'
-'height'
-'weight'
-'eyeColor'
-'occupation'
-
-Below, enter the criteria you would like to use to search, separated by commmas.
-example: eye color, dob, occupation
-
-NOTE: Entering more criteria will reduce your search results, possibly to none.
-
-
-You searched by these traits:
--
--
--
-
-These people match your search:
-- firstName + lastName
-- etc.
-
-If you would like to know more about one of these people, enter the number from above (next to the person's name):
+??add to traitSearch()?? 
+  'If you would like to know more about one of these people, enter the number from above (next to the person's name):'
+  age search
