@@ -122,7 +122,7 @@ function descendantsSearch(person, people){
 
   let parentId = person.id;
   let foundDescendants = [];
-  foundDescendants =  descendantsSearchRecurscion(parentId, people, foundDescendants);
+  foundDescendants =  descendantsSearchRecursion(parentId, people, foundDescendants);
   let text = "\n";   
   for (var i = 0; i < foundDescendants.length; i++) {
    text += (`${foundDescendants[i].firstName} ${foundDescendants[i].lastName}\n`);
@@ -250,18 +250,20 @@ example: eye color, occupation, last name`).toLowerCase();
     let occupation = prompt('Enter the last name of the person you are searching for.');
       traitSearchArray = traitSearchArray.filter(el => el.occupation.toLowerCase() == occupation.toLowerCase());
   }
-  if(traitSearchArray.length == people.length)
-
-
-  let traitSearchText = 'The following people match your search:';
+  if(traitSearchArray.length == people.length){
+    alert("No valid criteria were entered.\nTo search again, proceed, then click/tap the 'Start Searching' button.")
+  }
+  else{
+    let traitSearchText = 'The following people match your search:';
   for (let i = 0; i < traitSearchArray.length; i++){
     traitSearchText += `
 ${traitSearchArray[i].firstName} ${traitSearchArray[i].lastName}`;
   }
   alert(traitSearchText+"\n\nIf you would like to search again, proceed, then click/tap the 'Start Searching' button.");
+  }
 }
 
-function descendantsSearchRecurscion(parentId, people, foundDescendants){
+function descendantsSearchRecursion(parentId, people, foundDescendants){
   foundDescendants = people.filter(el => el.parents[0] === parentId || el.parents[1] === parentId);
   let numberOfAdditionalDescendants = foundDescendants.length;
   let additionalDescendants = [];
@@ -269,7 +271,7 @@ function descendantsSearchRecurscion(parentId, people, foundDescendants){
   
   for(let i = 0; i < foundDescendants.length; i++){
     parentId = foundDescendants[i].id;
-    additionalDescendants = descendantsSearchRecurscion(parentId, people, foundDescendants);
+    additionalDescendants = descendantsSearchRecursion(parentId, people, foundDescendants);
     
     if(additionalDescendants === undefined){
       return additionalDescendants;
