@@ -243,6 +243,9 @@ function traitSearch(people){
     alert("No one in the database matches your search.\n\nRestarting search.");
     return app(people);
   }
+  else if(traitSearchArray.length == 1){
+    mainMenu(traitSearchArray[0], people);
+  }
   else if(traitSearchArray.length == people.length){
     alert("No valid criteria were entered.\n\nPlease enter valid search criteria.");
     return traitSearch(people);

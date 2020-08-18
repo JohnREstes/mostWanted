@@ -1,1 +1,5 @@
 To-do list:
+
+if traitSearch() returns one person, prompt for info, family, desc....
+
+export trait searches to individual functions
