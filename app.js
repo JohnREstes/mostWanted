@@ -118,18 +118,6 @@ function chars(input){
   return true; // default validation only
 }
 
-function descendantsSearch(person, people){
-
-  let parentId = person.id;
-  let foundDescendants = [];
-  foundDescendants =  descendantsSearchRecursion(parentId, people, foundDescendants);
-  let text = "\n";   
-  for (var i = 0; i < foundDescendants.length; i++) {
-   text += (`${foundDescendants[i].firstName} ${foundDescendants[i].lastName}\n`);
-  }
-  alert(`${person.firstName} ${person.lastName} has ${foundDescendants.length} descendants:\n${text}`);
-}  
-
 function familySearch(person, people){
   let personsFamilyWithNames = {};
   personsFamilyWithNames.spouse = returnFunctionReturn(function(){
@@ -210,7 +198,7 @@ function correctCase(input){
 }
 
 function traitSearch(people){
-  let traitsToSearchBy = prompt(`Please type the individual traits you would like to search by, seperated by a comma.\n\nfirst name, last name, date of birth, gender, height, weight, eye color, and/or occupation.`).toLowerCase();
+  let traitsToSearchBy = prompt(`Please type the individual traits you would like to search by, seperated by a comma.\n\nfirst name, last name, age, gender, height, weight, eye color, and/or occupation.`).toLowerCase();
   let traitSearchArray = [...people];
   
   if(traitsToSearchBy.includes('first')){
@@ -221,10 +209,10 @@ function traitSearch(people){
     let lastName = prompt('Enter the last name of the person you are searching for.');
       traitSearchArray = traitSearchArray.filter(el => el.lastName.toLowerCase() == lastName.toLowerCase());
   }
-  /* Maybe add an age search later instead of dob search. 
-  if(traitsToSearchBy.includes('date') || traitsToSearchBy.includes('birth') || traitsToSearchBy.includes('dob')){
-    let dob = prompt('Enter the date of birth of the person you are searching for in the following format:\nmm/dd/yyyy');
-      traitSearchArray = traitSearchArray.filter(el => el.dob === dob);
+  /*
+  if(traitsToSearchBy.includes('age')){
+    let age = prompt('Enter the age, in years, of the person you are searching for.');
+      traitSearchArray = traitSearchArray.filter(el => el.age === age);
   } */
   if(traitsToSearchBy.includes('gender') || traitsToSearchBy.includes('sex')){
     let gender = prompt('Enter the gender of the person you are searching for.');
@@ -246,18 +234,44 @@ function traitSearch(people){
     let occupation = prompt('Enter the occupation of the person you are searching for.');
       traitSearchArray = traitSearchArray.filter(el => el.occupation.toLowerCase() == occupation.toLowerCase());
   }
-  if(traitSearchArray.length == people.length){
-    alert("No valid criteria were entered.\nTo search again, proceed, then click/tap the 'Start Searching' button.")
+  if(traitSearchArray.length == 0){
+    alert("No one in the database matches your search.\n\nRestarting search.");
+    return app(people);
+  }
+  else if(traitSearchArray.length == people.length){
+    alert("No valid criteria were entered.\n\nRestarting search.");
+    return app(people);
   }
   else{
     let traitSearchText = 'The following people match your search:';
-  for (let i = 0; i < traitSearchArray.length; i++){
-    traitSearchText += `
+    for (let i = 0; i < traitSearchArray.length; i++){
+      traitSearchText += `
 ${traitSearchArray[i].firstName} ${traitSearchArray[i].lastName}`;
   }
-  alert(traitSearchText+"\n\nIf you would like to search again, proceed, then click/tap the 'Start Searching' button.");
+  alert(traitSearchText);
+  return app(people);
   }
 }
+
+function descendantsSearch(person, people){
+
+  let parentId = person.id;
+  let foundDescendants = [];
+  foundDescendants =  descendantsSearchRecursion(parentId, people, foundDescendants);
+  let text = "\n";   
+  for (var i = 0; i < foundDescendants.length; i++) {
+   text += (`${foundDescendants[i].firstName} ${foundDescendants[i].lastName}\n`);
+  }
+  let sOrNoS = 's';
+  let periodOrColonAndLine = ':\n'
+  if(foundDescendants.length == 0){
+    periodOrColonAndLine = '.';
+  }
+  if(foundDescendants.length == 1){
+    sOrNoS = '';
+  }
+  alert(`${person.firstName} ${person.lastName} has ${foundDescendants.length} descendant${sOrNoS}${periodOrColonAndLine}${text}`);
+} 
 
 function descendantsSearchRecursion(parentId, people, foundDescendants){
   foundDescendants = people.filter(el => el.parents[0] === parentId || el.parents[1] === parentId);
