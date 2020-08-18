@@ -215,10 +215,12 @@ function traitSearch(people){
   
   if(traitsToSearchBy.includes('first')){
     let firstName = prompt('Enter the first name of the person you are searching for.');
+    firstName = correctCase(firstName);
       traitSearchArray = traitSearchArray.filter(el => el.firstName.toLowerCase() == firstName.toLowerCase());
   }
   if(traitsToSearchBy.includes('last')){
     let lastName = prompt('Enter the last name of the person you are searching for.');
+    lastName = correctCase(lastName);
       traitSearchArray = traitSearchArray.filter(el => el.lastName.toLowerCase() == lastName.toLowerCase());
   }
   if(traitsToSearchBy.includes('date') || traitsToSearchBy.includes('birth') || traitsToSearchBy.includes('dob')){
