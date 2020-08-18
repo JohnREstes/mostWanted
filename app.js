@@ -244,8 +244,8 @@ function traitSearch(people){
     return app(people);
   }
   else if(traitSearchArray.length == people.length){
-    alert("No valid criteria were entered.\n\nRestarting search.");
-    return app(people);
+    alert("No valid criteria were entered.\n\nPlease enter valid search criteria.");
+    return traitSearch(people);
   }
   else{
     let traitSearchText = 'The following people match your search:';

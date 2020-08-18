@@ -1,13 +1,1 @@
 To-do list:
-
-Dillon:
-- Account for the case of no one matching the search criteria given.
-- Make the trait search ask to quit or restart.
-
-
-- Validation
-
-
-??add to traitSearch()?? 
-  'If you would like to know more about one of these people, enter the number from above (next to the person's name):'
-  age search
