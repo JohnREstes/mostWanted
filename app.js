@@ -272,7 +272,7 @@ function descendantsSearch(person, people){
   if(foundDescendants.length == 0){
     periodOrColonAndLine = '.';
   }
-  if(foundDescendants.length == 1){
+  else if(foundDescendants.length == 1){
     sOrNoS = '';
   }
   alert(`${person.firstName} ${person.lastName} has ${foundDescendants.length} descendant${sOrNoS}${periodOrColonAndLine}${text}`);
