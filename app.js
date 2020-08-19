@@ -202,28 +202,39 @@ function traitSearch(people){
   let traitSearchArray = [...people];
   
   if(traitsToSearchBy.includes('first')){
-    traitSearchArray = narrowBy(traitSearchArray, 'firstName');
+    let userInput = specificPrompt('first name');
+    traitSearchArray = narrowBy(traitSearchArray, 'firstName', userInput);
   }
   if(traitsToSearchBy.includes('last')){
-    traitSearchArray = narrowBy(traitSearchArray, 'lastName');
+    let userInput = specificPrompt('last name');
+    traitSearchArray = narrowBy(traitSearchArray, 'lastName', userInput);
   }
   if(traitsToSearchBy.includes('gender') || traitsToSearchBy.includes('sex')){
-    traitSearchArray = narrowBy(traitSearchArray, 'gender');
+    let userInput = specificPrompt('gender');
+    traitSearchArray = narrowBy(traitSearchArray, 'gender', userInput);
   }
   if(traitsToSearchBy.includes('height')){
-    traitSearchArray = narrowBy(traitSearchArray, 'height');
+    let userInput = specificPrompt("height, in inches (e.g. '72' for 6'0\"),");
+    traitSearchArray = narrowBy(traitSearchArray, 'height', userInput);
   }
   if(traitsToSearchBy.includes('weight')){
-    traitSearchArray = narrowBy(traitSearchArray, 'weight');
+    let userInput = specificPrompt('weight, in pounds,');
+    traitSearchArray = narrowBy(traitSearchArray, 'weight', userInput);
   }
   if(traitsToSearchBy.includes('eye') || traitsToSearchBy.includes('color')){
-    traitSearchArray = narrowBy(traitSearchArray, 'eyeColor');
+    let userInput = specificPrompt('eye color');
+    traitSearchArray = narrowBy(traitSearchArray, 'eyeColor', userInput);
   }
   if(traitsToSearchBy.includes('occupation') || traitsToSearchBy.includes('job')){
-    traitSearchArray = narrowBy(traitSearchArray, 'occupation');
+    let userInput = specificPrompt('occupation');
+    traitSearchArray = narrowBy(traitSearchArray, 'occupation', userInput);
   }
   if(traitsToSearchBy.includes('age')){ // 'age' is last, since it is the most intensive search.
-    traitSearchArray = narrowBy(traitSearchArray, 'age');
+    let userInput = specificPrompt('age');
+    for(let i = 0; i < traitSearchArray.length; i++){
+      traitSearchArray[i].age = DOBToAge(traitSearchArray[i]);
+    }
+    traitSearchArray = narrowBy(traitSearchArray, 'age', userInput);
   }
 
   if(traitSearchArray.length == 0){
@@ -248,36 +259,7 @@ ${traitSearchArray[i].firstName} ${traitSearchArray[i].lastName}`;
   }
 }
 
-function narrowBy(currentArray, criterion){
-  switch(criterion){
-    case 'firstName':
-      var userInput = specificPrompt('first name');
-      break;
-    case 'lastName':
-      var userInput = specificPrompt('last name');
-      break;
-    case 'gender':
-      var userInput = specificPrompt('gender');
-      break;
-    case 'height':
-      var userInput = specificPrompt("height, in inches (e.g. '72' for 6'0\"),");
-      break;
-    case 'weight':
-      var userInput = specificPrompt('weight, in pounds,');
-      break;
-    case 'eyeColor':
-      var userInput = specificPrompt('eye color');
-      break;
-    case 'occupation':
-      var userInput = specificPrompt('occupation');
-      break;
-    case 'age':
-      var userInput = specificPrompt('age');
-      for(let i = 0; i < currentArray.length; i++){
-        currentArray[i].age = DOBToAge(currentArray[i]);
-      }
-      break;
-  }
+function narrowBy(currentArray, criterion, userInput){
   return currentArray.filter(el => el[criterion].toString().toLowerCase() == userInput.toLowerCase());
 }
 
