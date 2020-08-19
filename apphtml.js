@@ -9,7 +9,11 @@ function app(people){
     let searchResults;
   switch(searchType){
     case 'yes':
-      searchResults = searchByName(people);
+        document.getElementById("alertBox").innerHTML = "What is the person's first name?";
+        document.getElementById('submit').setAttribute('onclick', searchByNameFirst(people))
+        document.getElementById("submit").onclick = function(){
+            firstName = document.getElementById("userInput").value;
+        }
       break;
     case 'no':
       traitSearch(people);
@@ -60,13 +64,15 @@ function mainMenu(person, people){
   }
 }
 
-function searchByName(people){
+function searchByNameFirst(people){
   document.getElementById("alertBox").innerHTML = "What is the person's first name?";
   let firstName;
   window.addEventListener("click", () => {
     firstName = document.getElementById("userInput").value;
   });
- 
+}
+
+function searchByNameLast(people){
   //let firstName = promptFor("What is the person's first name?", chars);
   let lastName = promptFor("What is the person's last name?", chars);
   //document.getElementById("alertBox").innerHTML = "Do you know the name of the person you are looking for?\n\nEnter 'yes' or 'no'";
