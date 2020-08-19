@@ -202,49 +202,36 @@ function traitSearch(people){
   let traitSearchArray = [...people];
   
   if(traitsToSearchBy.includes('first')){
-    let firstName = prompt('Enter the first name of the person you are searching for.');
-    firstName = correctCase(firstName);
-      traitSearchArray = traitSearchArray.filter(el => el.firstName.toLowerCase() == firstName.toLowerCase());
+    traitSearchArray = narrowBy(traitSearchArray, 'firstName');
   }
   if(traitsToSearchBy.includes('last')){
-    let lastName = prompt('Enter the last name of the person you are searching for.');
-    lastName = correctCase(lastName);
-      traitSearchArray = traitSearchArray.filter(el => el.lastName.toLowerCase() == lastName.toLowerCase());
+    traitSearchArray = narrowBy(traitSearchArray, 'lastName');
   }
-  if(traitsToSearchBy.includes('age')){
-    let age = prompt('Enter the age, in years, of the person you are searching for.');
-      for(let i = 0; i < traitSearchArray.length; i++){
-        let currentPersonAge = DOBToAge(traitSearchArray[i]);
-        traitSearchArray[i]['age'] = currentPersonAge;
-    }
-    traitSearchArray = traitSearchArray.filter(el => el.age == age);
-  } 
   if(traitsToSearchBy.includes('gender') || traitsToSearchBy.includes('sex')){
-    let gender = prompt('Enter the gender of the person you are searching for.');
-      traitSearchArray = traitSearchArray.filter(el => el.gender.toLowerCase() == gender.toLowerCase());
+    traitSearchArray = narrowBy(traitSearchArray, 'gender');
   }
   if(traitsToSearchBy.includes('height')){
-    let height = prompt("Enter the height, in inches (e.g. '72' for 6'0\"), of the person you are searching for.");
-      traitSearchArray = traitSearchArray.filter(el => el.height == height);
+    traitSearchArray = narrowBy(traitSearchArray, 'height');
   }
   if(traitsToSearchBy.includes('weight')){
-    let weight = prompt('Enter the weight, in pounds, of the person you are searching for.');
-      traitSearchArray = traitSearchArray.filter(el => el.weight == weight);
+    traitSearchArray = narrowBy(traitSearchArray, 'weight');
   }
   if(traitsToSearchBy.includes('eye') || traitsToSearchBy.includes('color')){
-    let eyeColor = prompt('Enter the eye color of the person you are searching for.');
-      traitSearchArray = traitSearchArray.filter(el => el.eyeColor.toLowerCase() == eyeColor.toLowerCase());
+    traitSearchArray = narrowBy(traitSearchArray, 'eyeColor');
   }
   if(traitsToSearchBy.includes('occupation') || traitsToSearchBy.includes('job')){
-    let occupation = prompt('Enter the occupation of the person you are searching for.');
-      traitSearchArray = traitSearchArray.filter(el => el.occupation.toLowerCase() == occupation.toLowerCase());
+    traitSearchArray = narrowBy(traitSearchArray, 'occupation');
   }
+  if(traitsToSearchBy.includes('age')){ // 'age' is last, since it is the most intensive search.
+    traitSearchArray = narrowBy(traitSearchArray, 'age');
+  }
+
   if(traitSearchArray.length == 0){
     alert("No one in the database matches your search.\n\nRestarting search.");
     return app(people);
   }
   else if(traitSearchArray.length == 1){
-    mainMenu(traitSearchArray[0], people);
+    return mainMenu(traitSearchArray[0], people);
   }
   else if(traitSearchArray.length == people.length){
     alert("No valid criteria were entered.\n\nPlease enter valid search criteria.");
@@ -259,6 +246,43 @@ ${traitSearchArray[i].firstName} ${traitSearchArray[i].lastName}`;
   alert(traitSearchText);
   return app(people);
   }
+}
+
+function narrowBy(currentArray, criterion){
+  switch(criterion){
+    case 'firstName':
+      var userInput = specificPrompt('first name');
+      break;
+    case 'lastName':
+      var userInput = specificPrompt('last name');
+      break;
+    case 'gender':
+      var userInput = specificPrompt('gender');
+      break;
+    case 'height':
+      var userInput = specificPrompt("height, in inches (e.g. '72' for 6'0\"),");
+      break;
+    case 'weight':
+      var userInput = specificPrompt('weight, in pounds,');
+      break;
+    case 'eyeColor':
+      var userInput = specificPrompt('eye color');
+      break;
+    case 'occupation':
+      var userInput = specificPrompt('occupation');
+      break;
+    case 'age':
+      var userInput = specificPrompt('age');
+      for(let i = 0; i < currentArray.length; i++){
+        currentArray[i].age = DOBToAge(currentArray[i]);
+      }
+      break;
+  }
+  return currentArray.filter(el => el[criterion].toString().toLowerCase() == userInput.toLowerCase());
+}
+
+function specificPrompt(whatToEnter){
+  return prompt(`Enter the ${whatToEnter} of the person you are searching for.`);
 }
 
 function descendantsSearch(person, people){
